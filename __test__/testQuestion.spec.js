@@ -1,6 +1,8 @@
 const request = require('supertest');
-const app = require('../server/app');
-
+const app = require('../server');
+// afterEach(()=>{
+//   app.close();
+// })
 describe('Question test', () => {
   it('get questions successfully', async () => {
     await request(app)

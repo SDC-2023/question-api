@@ -1,12 +1,8 @@
 require('dotenv').config();
-const express = require('express');
+const app = require('./index');
 
-const app = express();
-const router = require('./routes');
-// Serves up all static and generated assets in ../client/dist.
+const PORT = process.env.PORT || 3000;
 
-/* ---------------- Server listens ---------------- */
-app.use('', router);
-app.listen(process.env.PORT || 3000);
-console.log(`Listening at http://localhost:${process.env.PORT || 3000}`);
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server available at http://localhost:${PORT}`);
+});
