@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../server/app');
+const { Client } = require('pg');
 
 describe('Question test', () => {
   it('get questions', async () => {
