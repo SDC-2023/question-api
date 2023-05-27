@@ -9,3 +9,4 @@ const router = require('./routes');
 app.use('', router);
 app.listen(process.env.PORT || 3000);
 console.log(`Listening at http://localhost:${process.env.PORT || 3000}`);
+module.exports = app;
