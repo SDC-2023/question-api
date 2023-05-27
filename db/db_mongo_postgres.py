@@ -58,4 +58,9 @@ with engine.begin() as conn:
     conn.execute(answerQuery)
     questions.to_sql('questions', engine, if_exists='append', index = False)
     answers.to_sql('answers', engine, if_exists='append', index = False)
+    conn.execute(text('''SELECT setval('answers_id_seq'::regclass,(SELECT MAX(id) FROM answers)+1)'''))
+    conn.execute(text('''SELECT setval('questions_id_seq'::regclass,(SELECT MAX(id) FROM questions)+1)'''))
+    conn.execute(text('''CREATE INDEX a_id ON answers(question_id)'''))
+    conn.execute(text('''CREATE INDEX q_id ON questions(product_id)'''))
+
 engine.dispose()

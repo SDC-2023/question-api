@@ -1,5 +1,4 @@
 const dotenv = require('dotenv');
-const Promise = require("bluebird");
 const { Pool } = require('pg');
 
 const client = new Pool({
