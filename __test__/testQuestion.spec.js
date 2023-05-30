@@ -1,8 +1,10 @@
 const request = require('supertest');
 const app = require('../server');
-// afterEach(()=>{
-//   app.close();
-// })
+const { closeConnect } = require('../server/dbConnection.js');
+
+afterAll(async () => {
+  await closeConnect();
+});
 describe('Question test', () => {
   it('get questions successfully', async () => {
     await request(app)

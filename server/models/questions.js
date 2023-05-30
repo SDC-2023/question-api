@@ -1,8 +1,12 @@
 const client = require('../dbConnection');
 
 module.exports = {
-  async getQuestions(productId, cb) {
-    const getQuestionQuery = `SELECT * FROM questions WHERE product_id = '${productId}' ORDER BY helpful DESC`;
+  async getQuestions(params, cb) {
+    // const getQuestionQuery = `SELECT * FROM questions WHERE product_id = '${params.productId}' ORDER BY helpful DESC
+    // LIMIT '${params.count}' OFFSET '${(params.page - 1) * params.count}'`;
+
+    const getQuestionQuery = `SELECT * FROM questions WHERE product_id = '${params.productId}' ORDER BY helpful DESC`;
+
     try {
       const { rows } = await client.query(getQuestionQuery);
       await cb(rows, null);
@@ -11,12 +15,18 @@ module.exports = {
     }
   },
 
-  async getAnswer(questionId, cb) {
+  async getAnswer(params, cb) {
+    // const getAnswerQuery = `SELECT answers.body, answers.date_written,
+    // answers.answerer_name, answers.helpful, answers.url
+    // FROM questions JOIN answers
+    // ON questions.id = answers.question_id
+    // WHERE questions.id = '${params.questionId}' ORDER BY answers.helpful DESC
+    // LIMIT '${params.count}' OFFSET '${(params.page - 1) * params.count}'`;
     const getAnswerQuery = `SELECT answers.body, answers.date_written,
     answers.answerer_name, answers.helpful, answers.url
     FROM questions JOIN answers
     ON questions.id = answers.question_id
-    WHERE questions.id = '${questionId}' ORDER BY answers.helpful DESC`;
+    WHERE questions.id = '${params.questionId}' ORDER BY answers.helpful DESC`;
     try {
       const { rows } = await client.query(getAnswerQuery);
       await cb(rows, null);
@@ -31,7 +41,6 @@ module.exports = {
     const postQuery = `INSERT INTO questions(product_id, body, date_written, asker_name, asker_email, reported, helpful) VALUES
     ('${Number(params.product_id)}', '${params.body}','${time}','${params.asker_name}', '${params.asker_email}',0,0)`;
     try {
-      console.log(postQuery);
       const response = await client.query(postQuery);
       await cb(response, null);
     } catch (err) {
