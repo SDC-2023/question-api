@@ -62,5 +62,4 @@ with engine.begin() as conn:
     conn.execute(text('''SELECT setval('questions_id_seq'::regclass,(SELECT MAX(id) FROM questions)+1)'''))
     conn.execute(text('''CREATE INDEX a_id ON answers(question_id)'''))
     conn.execute(text('''CREATE INDEX q_id ON questions(product_id)'''))
-
 engine.dispose()
